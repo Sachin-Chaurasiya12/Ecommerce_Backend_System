@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.EcommBackend.dto.RegisterRequest;
-import com.example.EcommBackend.dto.RegisterResponseDTO;
+import com.example.EcommBackend.dto.ResponseDTO;
 import com.example.EcommBackend.model.Users;
 import com.example.EcommBackend.repository.UserRepo;
 
@@ -17,13 +17,13 @@ public class UserService {
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
     
-    public RegisterResponseDTO register(RegisterRequest dto){
+    public ResponseDTO register(RegisterRequest dto){
         Users user = new Users();
         user.setUsername(dto.getUsername());
         user.setPassword(encoder.encode(dto.getPassword()));
         repo.save(user);
 
-        return new RegisterResponseDTO(
+        return new ResponseDTO(
             user.getId(),
             user.getUsername()
         );

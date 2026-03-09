@@ -1,10 +1,10 @@
 package com.example.EcommBackend.dto;
 
-public class RegisterResponseDTO {
+public class ResponseDTO {
     private int id;
     private String username;
 
-    public RegisterResponseDTO(int id,String username){
+    public ResponseDTO(int id,String username){
         this.id=id;
         this.username = username;
     }
