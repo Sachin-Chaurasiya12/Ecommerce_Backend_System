@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.EcommBackend.dto.RegisterRequest;
 import com.example.EcommBackend.dto.ResponseDTO;
 import com.example.EcommBackend.dto.loginRequest;
-import com.example.EcommBackend.service.JwtService;
 import com.example.EcommBackend.service.UserService;
 
 @RestController
