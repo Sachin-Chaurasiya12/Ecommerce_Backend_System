@@ -75,6 +75,14 @@ POST /api/products
 PUT /api/products/{id}
 DELETE /api/products/{id}
 ```
+### Category
+
+```
+GET /api/category
+POST /api/category
+PUT /api/category/{id}
+DELETE /api/category/{id}
+```
 
 ### Cart
 
