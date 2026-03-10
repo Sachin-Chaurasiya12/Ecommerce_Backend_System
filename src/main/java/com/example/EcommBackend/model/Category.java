@@ -21,7 +21,7 @@ public class Category {
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<product> product;
+    private List<Product> product;
 
     public Category(){}
 
@@ -43,10 +43,10 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
-    public List<product> getProduct() {
+    public List<Product> getProduct() {
         return product;
     }
-    public void setProduct(List<product> product) {
+    public void setProduct(List<Product> product) {
         this.product = product;
     }
 }

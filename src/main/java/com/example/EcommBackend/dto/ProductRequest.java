@@ -1,32 +1,23 @@
-package com.example.EcommBackend.model;
+package com.example.EcommBackend.dto;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.EcommBackend.model.Category;
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name="product_details")
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductRequest {
     private Long id;
 
     private String name;
     private String description;
     private Double price;
-    @ManyToOne()
-    @JoinColumn(name = "Category_id")
     private Category category;
     private LocalDateTime CreatedAt;
     private LocalDateTime UpdatedAt;
 
-    public Product(){}
+    public ProductRequest(){}
 
     public Long getId() {
         return id;
@@ -70,5 +61,4 @@ public class Product {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         UpdatedAt = updatedAt;
     }
-
 }
