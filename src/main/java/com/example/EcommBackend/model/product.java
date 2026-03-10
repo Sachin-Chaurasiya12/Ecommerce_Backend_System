@@ -2,17 +2,15 @@ package com.example.EcommBackend.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.*;
 
 @Entity
-@Table(name="product_details")
+@Table(name = "product_details")
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,55 +18,64 @@ public class Product {
     private String name;
     private String description;
     private Double price;
-    @ManyToOne()
-    @JoinColumn(name = "Category_id")
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
-    private LocalDateTime CreatedAt;
-    private LocalDateTime UpdatedAt;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     public Product(){}
 
     public Long getId() {
         return id;
     }
-    public void setId(Long id) {
-        this.id = id;
-    }
+
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
+
     public String getDescription() {
         return description;
     }
-    public void setDescription(String description) {
-        this.description = description;
-    }
+
     public Double getPrice() {
         return price;
     }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void setPrice(Double price) {
         this.price = price;
     }
-    public Category getCatogaryId() {
-        return category;
-    }
-    public void setCatogaryId(Category catogaryId) {
-        this.category = catogaryId;
-    }
-    public LocalDateTime getCreatedAt() {
-        return CreatedAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        CreatedAt = createdAt;
-    }
-    public LocalDateTime getUpdatedAt() {
-        return UpdatedAt;
-    }
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        UpdatedAt = updatedAt;
-    }
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

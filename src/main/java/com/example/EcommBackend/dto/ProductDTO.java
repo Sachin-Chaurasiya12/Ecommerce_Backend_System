@@ -40,9 +40,6 @@ public class ProductDTO {
     public void setId(Long id) {
         this.id = id;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
     public void setCategory(Category category) {
         this.category = category;
     }
@@ -51,6 +48,9 @@ public class ProductDTO {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
     public void setPrice(Double price) {
         this.price = price;
