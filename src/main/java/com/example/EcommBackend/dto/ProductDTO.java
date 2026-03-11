@@ -3,6 +3,7 @@ package com.example.EcommBackend.dto;
 import java.time.LocalDateTime;
 
 import com.example.EcommBackend.model.Category;
+import com.example.EcommBackend.model.Product;
 
 public class ProductDTO {
     private Long id;
@@ -15,6 +16,17 @@ public class ProductDTO {
     private LocalDateTime UpdatedAt;
 
     public ProductDTO(){}
+
+    public ProductDTO(Long id,String name,String description,
+        Double price,Category category, LocalDateTime CreatedAt, LocalDateTime UpdatedAt){
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.price = price;
+            this.category = category;
+            this.CreatedAt = CreatedAt;
+            this.UpdatedAt = UpdatedAt;
+        }
 
     public Long getId() {
         return id;

@@ -28,24 +28,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(request -> {
-                var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-                corsConfiguration.setAllowedOrigins(java.util.List.of("http://localhost:8080")); // Add your frontend/swagger port
-                corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
-                return corsConfiguration;
-                }))
                 .authorizeHttpRequests(request -> request
                     .requestMatchers(
                         "/api/auth/**",
                         "/v3/api-docs",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/webjars/**",
-                        "/swagger-resources/**",
-                        "/configuration/ui",
-                        "/configuration/security"
+                        "/swagger-ui.html"
                     )
                 .permitAll()
                 .anyRequest().authenticated())

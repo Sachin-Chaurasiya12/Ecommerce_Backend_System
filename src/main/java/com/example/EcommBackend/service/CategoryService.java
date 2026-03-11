@@ -51,7 +51,8 @@ public class CategoryService {
     }
 
     public ResponseEntity<String> deleteCategories(Long id){
-        repo.deleteById(id);
+        Category category = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+        repo.delete(category);
         return ResponseEntity.ok("Category deleted Successfully");
     }
     public CategoryDTO updateCategories(Long id,RequestCategory request) {
