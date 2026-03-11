@@ -25,27 +25,31 @@ public class ProductService {
     @Autowired
     private CategoryRepo repo2;
 
-    public List<ProductDTO> getProducts(){
-        List<Product> products = repo.findAll();
-        List<ProductDTO> productDTOs = new ArrayList<>();
-
-        for(Product product : products){
-
-            ProductDTO dto = new ProductDTO();
-            
-            dto.setId(product.getId());
-            dto.setName(product.getName());
-            dto.setDescription(product.getDescription());
-            dto.setPrice(product.getPrice());
-            dto.setCategory(product.getCategory());
-            dto.setCreatedAt(product.getCreatedAt());
-            dto.setUpdatedAt(product.getUpdatedAt());
-
-            productDTOs.add(dto);
-        
-        }
-        return productDTOs;
+    public List<ProductDTO> getProducts() {
+    List<Product> products = repo.findAll();
+    
+    // 1. Check if the list is empty and throw your custom exception
+    if (products.isEmpty()) {
+        throw new ResourceNotFoundException("No products found");
     }
+
+    List<ProductDTO> productDTOs = new ArrayList<>();
+
+    for (Product product : products) {
+        ProductDTO dto = new ProductDTO();
+        dto.setId(product.getId());
+        dto.setName(product.getName());
+        dto.setDescription(product.getDescription());
+        dto.setPrice(product.getPrice());
+        dto.setCategory(product.getCategory());
+        dto.setCreatedAt(product.getCreatedAt());
+        dto.setUpdatedAt(product.getUpdatedAt());
+
+        productDTOs.add(dto);
+    }
+    
+    return productDTOs;
+}
 
    public Product addProduct(ProductRequest request) {
     Product product = new Product();

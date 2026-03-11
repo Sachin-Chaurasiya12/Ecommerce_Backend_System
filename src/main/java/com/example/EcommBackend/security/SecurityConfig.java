@@ -79,12 +79,4 @@ public class SecurityConfig {
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(12);
     }
-    @Bean
-public org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer webSecurityCustomizer() {
-    return (web) -> web.ignoring().requestMatchers(
-        "/v3/api-docs/**",
-        "/swagger-ui/**",
-        "/swagger-ui.html"
-    );
-}
 }
