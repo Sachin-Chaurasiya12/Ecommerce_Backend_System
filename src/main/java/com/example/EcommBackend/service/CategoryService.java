@@ -46,12 +46,24 @@ public class CategoryService {
 
     public CategoryDTO getCategorybyid(Long id){
         Category cat = repo.findById(id)
-                            .orElseThrow(() -> new ResourceNotFoundException("Id not found"));
+                            .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
         return new CategoryDTO(cat.getId(),cat.getName(),cat.getDescription());
     }
 
     public ResponseEntity<String> deleteCategories(Long id){
         repo.deleteById(id);
         return ResponseEntity.ok("Category deleted Successfully");
+    }
+    public CategoryDTO updateCategories(Long id,RequestCategory request) {
+        Category existing = repo.findById(id)
+                                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+        
+        existing.setName(request.getName());
+        existing.setDescription(request.getDescription());
+
+        Category updated = repo.save(existing);
+
+        return new CategoryDTO(id, updated.getName(), updated.getDescription());
+
     }
 }

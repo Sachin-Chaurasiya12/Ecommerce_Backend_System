@@ -28,16 +28,25 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(request -> {
+                var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
+                corsConfiguration.setAllowedOrigins(java.util.List.of("http://localhost:8080")); // Add your frontend/swagger port
+                corsConfiguration.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                corsConfiguration.setAllowedHeaders(java.util.List.of("*"));
+                return corsConfiguration;
+                }))
                 .authorizeHttpRequests(request -> request
                     .requestMatchers(
-                        "/api/auth/register",
-                        "/api/auth/login",
+                        "/api/auth/**",
+                        "/v3/api-docs",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
-                        "/swagger-ui.html"
+                        "/swagger-ui.html",
+                        "/webjars/**",
+                        "/swagger-resources/**",
+                        "/configuration/ui",
+                        "/configuration/security"
                     )
-                .permitAll()
-                .requestMatchers("/api/products/**")
                 .permitAll()
                 .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -59,4 +68,12 @@ public class SecurityConfig {
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(12);
     }
+    @Bean
+public org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer webSecurityCustomizer() {
+    return (web) -> web.ignoring().requestMatchers(
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "/swagger-ui.html"
+    );
+}
 }
