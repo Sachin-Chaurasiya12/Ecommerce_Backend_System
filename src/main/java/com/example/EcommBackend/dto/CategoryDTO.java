@@ -1,8 +1,6 @@
 package com.example.EcommBackend.dto;
 
-import java.util.List;
 
-import com.example.EcommBackend.model.Product;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"id", "name", "description"})
@@ -13,7 +11,11 @@ public class CategoryDTO {
     private String description;
 
     public CategoryDTO(){}
-
+    public CategoryDTO(Long id, String name, String description){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
     public Long getId() {
         return id;
     }
