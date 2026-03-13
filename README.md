@@ -88,8 +88,8 @@ DELETE /api/category/{id}
 
 ```
 POST /api/cart/add
-GET /api/cart
-DELETE /api/cart/remove
+GET /api/cart/{id}
+DELETE /api/cart/remove/{id}
 ```
 
 ### Orders
