@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.EcommBackend.Exceptions.ResourceNotFoundException;
@@ -59,6 +60,15 @@ public class CartService {
             null,
             cart.getItems()
         );
+    }
+
+    public ResponseEntity<String> removeCart(Long userId) {
+        Cart cart = cartRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User Cart not found!"));
+        
+        cartRepository.delete(cart);
+
+        return ResponseEntity.ok("User Cart deleted successfully");
     }
     
 }
