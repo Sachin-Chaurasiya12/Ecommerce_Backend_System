@@ -145,4 +145,4 @@ http://localhost:8080
 
 ## 👨‍💻 Author
 
-Sachin Chaurasiya
+* Sachin Chaurasiya

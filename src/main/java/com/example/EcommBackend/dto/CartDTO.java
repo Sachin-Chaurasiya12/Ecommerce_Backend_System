@@ -2,7 +2,6 @@ package com.example.EcommBackend.dto;
 
 import java.util.List;
 import com.example.EcommBackend.model.CartItem;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 
 
 public class CartDTO {
