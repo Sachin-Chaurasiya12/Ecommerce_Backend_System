@@ -1,27 +1,31 @@
 package com.example.EcommBackend.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Order")
+@Table(name="Orders")
 public class Order {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Long userId;
-    private String shippingaddress;
+    private String shippingAddress;
     private String payment;
-    private double totalprice;
-    private LocalDateTime OrderedAt;
+    private double totalPrice;
+    private LocalDateTime orderedAt;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
-    private List<OrderItem> items;
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items = new ArrayList<>();
 
     public Order(){}
 
@@ -38,10 +42,10 @@ public class Order {
         this.items = items;
     }
     public LocalDateTime getOrderedAt() {
-        return OrderedAt;
+        return orderedAt;
     }
     public void setOrderedAt(LocalDateTime orderedAt) {
-        OrderedAt = orderedAt;
+        this.orderedAt = orderedAt;
     }
     public String getPayment() {
         return payment;
@@ -50,16 +54,16 @@ public class Order {
         this.payment = payment;
     }
     public String getShippingaddress() {
-        return shippingaddress;
+        return shippingAddress;
     }
     public void setShippingaddress(String shippingaddress) {
-        this.shippingaddress = shippingaddress;
+        this.shippingAddress = shippingaddress;
     }
     public double getTotalprice() {
-        return totalprice;
+        return totalPrice;
     }
     public void setTotalprice(double totalprice) {
-        this.totalprice = totalprice;
+        this.totalPrice = totalprice;
     }
     public Long getUserId() {
         return userId;
