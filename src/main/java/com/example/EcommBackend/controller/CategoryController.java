@@ -25,6 +25,7 @@ package com.example.EcommBackend.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +54,7 @@ public class CategoryController {
         return service.getCategories();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Category addCategory(@RequestBody RequestCategory category){
         return service.addCategory(category);
@@ -62,10 +64,13 @@ public class CategoryController {
     public CategoryDTO getCategories(@PathVariable Long id){
         return service.getCategorybyid(id);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategories(@PathVariable Long id){
         return service.deleteCategories(id);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public CategoryDTO updateCategories(@PathVariable Long id,@RequestBody RequestCategory request){
         return service.updateCategories(id,request);

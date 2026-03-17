@@ -24,8 +24,6 @@ package com.example.EcommBackend.dto;
 
 import java.util.List;
 
-import com.example.EcommBackend.model.OrderItem;
-
 import jakarta.validation.constraints.Size;
 
 public class OrderRequestDTO {
