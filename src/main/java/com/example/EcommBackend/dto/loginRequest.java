@@ -31,6 +31,7 @@ public class loginRequest {
         this.username = username;
         this.password = password;
     }
+    public loginRequest(){}
     
     public String getUsername() {
         return username;

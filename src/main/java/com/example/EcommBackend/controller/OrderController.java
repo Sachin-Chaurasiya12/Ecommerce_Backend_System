@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,14 +45,17 @@ public class OrderController {
     @Autowired
     private OrderService service;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     public OrderResponseDTO order(@RequestBody OrderRequestDTO request){
         return service.createOrder(request);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<OrderResponseDTO> getorder(){
         return service.getOrders();
     }
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/{orderid}")
     public ResponseEntity<OrderResponseDTO> getorderByid(@PathVariable Integer orderid){
         OrderResponseDTO responseDTO = service.getOrders(orderid);

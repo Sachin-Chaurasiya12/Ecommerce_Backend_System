@@ -22,13 +22,17 @@ Public License instead of this License.  But first, please read
 */
 package com.example.EcommBackend.dto;
 
+import com.example.EcommBackend.model.Role;
+
 public class ResponseDTO {
     private int id;
     private String username;
+    private Role role;
 
-    public ResponseDTO(int id,String username){
+    public ResponseDTO(int id,String username,Role role){
         this.id=id;
         this.username = username;
+        this.role = role;
     }
 
     public int getId() {
@@ -36,5 +40,8 @@ public class ResponseDTO {
     }
     public String getUsername() {
         return username;
+    }
+    public Role getRole() {
+        return role;
     }
 }
