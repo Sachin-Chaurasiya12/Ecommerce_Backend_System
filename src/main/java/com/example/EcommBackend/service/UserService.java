@@ -32,6 +32,7 @@ import org.springframework.stereotype.Service;
 import com.example.EcommBackend.dto.RegisterRequest;
 import com.example.EcommBackend.dto.ResponseDTO;
 import com.example.EcommBackend.dto.loginRequest;
+import com.example.EcommBackend.model.Role;
 import com.example.EcommBackend.model.Users;
 import com.example.EcommBackend.repository.UserRepo;
 
@@ -53,11 +54,13 @@ public class UserService {
         Users user = new Users();
         user.setUsername(dto.getUsername());
         user.setPassword(encoder.encode(dto.getPassword()));
+        user.setRole(Role.USER);
         repo.save(user);
 
         return new ResponseDTO(
             user.getId(),
-            user.getUsername()
+            user.getUsername(),
+            user.getRole()
         );
     }
     public String verify(loginRequest dto){

@@ -26,9 +26,12 @@ import java.util.List;
 
 import com.example.EcommBackend.model.OrderItem;
 
+import jakarta.validation.constraints.Size;
+
 public class OrderRequestDTO {
     private Integer userId;
     private String shippingAddress;
+    @Size(min = 1,message = "There must be atleast one item in the order")
     private List<OrderItemRequestDTO> items;
 
     public OrderRequestDTO(){}
