@@ -62,7 +62,7 @@ public class ProductDTO {
     public Double getPrice() {
         return price;
     }
-    public Category getCatogaryId() {
+    public Category getCatogary() {
         return category;
     }
     public LocalDateTime getCreatedAt() {

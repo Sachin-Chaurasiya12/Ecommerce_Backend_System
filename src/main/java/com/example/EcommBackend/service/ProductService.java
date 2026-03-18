@@ -26,11 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.EcommBackend.Exceptions.ResourceNotFoundException;
-import com.example.EcommBackend.dto.CategoryDTO;
 import com.example.EcommBackend.dto.ProductDTO;
 import com.example.EcommBackend.dto.ProductRequest;
 import com.example.EcommBackend.model.Category;
@@ -47,30 +50,24 @@ public class ProductService {
     @Autowired
     private CategoryRepo repo2;
 
-    public List<ProductDTO> getProducts() {
-    List<Product> products = repo.findAll();
+    public Page<ProductDTO> getProducts(int page,int size) {
+
+    Pageable pageable = PageRequest.of(page, size,Sort.by("price").ascending());
+    Page<Product> products = repo.findAll(pageable);
     
     // 1. Check if the list is empty and throw your custom exception
     if (products.isEmpty()) {
         throw new ResourceNotFoundException("No products found");
     }
-
-    List<ProductDTO> productDTOs = new ArrayList<>();
-
-    for (Product product : products) {
-        ProductDTO dto = new ProductDTO();
-        dto.setId(product.getId());
-        dto.setName(product.getName());
-        dto.setDescription(product.getDescription());
-        dto.setPrice(product.getPrice());
-        dto.setCategory(product.getCategory());
-        dto.setCreatedAt(product.getCreatedAt());
-        dto.setUpdatedAt(product.getUpdatedAt());
-
-        productDTOs.add(dto);
-    }
-    
-    return productDTOs;
+    return products.map(product -> new ProductDTO(
+        product.getId(),
+        product.getName(),
+        product.getDescription(),
+        product.getPrice(),
+        product.getCategory(),
+        product.getCreatedAt(),
+        product.getUpdatedAt()
+    ));
 }
 
    public Product addProduct(ProductRequest request) {
