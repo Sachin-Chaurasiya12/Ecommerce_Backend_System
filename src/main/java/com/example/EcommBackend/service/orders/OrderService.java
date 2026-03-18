@@ -31,7 +31,7 @@ import com.example.EcommBackend.dto.OrderResponseDTO;
 public interface OrderService {
     OrderResponseDTO createOrder(OrderRequestDTO request);
 
-    List<OrderResponseDTO> getOrders();
+    List<OrderResponseDTO> getOrders(int page,int size);
 
     OrderResponseDTO getOrders(Integer orderid);
 }

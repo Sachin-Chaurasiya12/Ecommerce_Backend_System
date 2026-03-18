@@ -114,7 +114,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<OrderResponseDTO> getOrders() {
+    public List<OrderResponseDTO> getOrders(int page,int size) {
         List<Orders> orders = orderRepo.findAll();
 
         List<OrderResponseDTO> dto = new ArrayList<>();
