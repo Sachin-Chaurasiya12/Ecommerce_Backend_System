@@ -25,8 +25,13 @@ package com.example.EcommBackend.service.orders;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.EcommBackend.Exceptions.ResourceNotFoundException;
@@ -114,21 +119,32 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<OrderResponseDTO> getOrders(int page,int size) {
-        List<Orders> orders = orderRepo.findAll();
+    public Page<OrderResponseDTO> getOrders(int page,int size) {
 
-        List<OrderResponseDTO> dto = new ArrayList<>();
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Orders> orders = orderRepo.findAll(pageable);
 
-        for(Orders o : orders ){
-            dto.add(mapToResponse(o));
+        if(orders.isEmpty()){
+            throw new ResourceNotFoundException("orders not found");
         }
-        return dto;
+
+        return orders.map(this::mapToResponse);
+        
     }
     @Override
     public OrderResponseDTO getOrders(Integer orderid) {
+        String email = SecurityContextHolder.getContext()
+                        .getAuthentication().getName();
+        Users user = userRepo.findOptionalByUsername(email)
+        .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+
         Orders orders = orderRepo.findById(orderid)
                     .orElseThrow(() -> new ResourceNotFoundException("order not found"));
         
+        if(orders.getUser().getId() != user.getId()){
+            throw new RuntimeException("Your not not allowed to access");
+        }
         return mapToResponse(orders);
     }
 
