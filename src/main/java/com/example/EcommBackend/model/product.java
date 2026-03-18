@@ -31,7 +31,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "product_details")
-public class Product {
+public class Product{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
