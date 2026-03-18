@@ -50,10 +50,16 @@ public class ProductService {
     @Autowired
     private CategoryRepo repo2;
 
-    public Page<ProductDTO> getProducts(int page,int size) {
+    public Page<ProductDTO> getProducts(int page,int size,Long CategoryId) {
 
     Pageable pageable = PageRequest.of(page, size,Sort.by("price").ascending());
-    Page<Product> products = repo.findAll(pageable);
+    Page<Product> products;
+
+    if(CategoryId != null){
+        products = repo.findByCategoryId(CategoryId, pageable);
+    }else{
+        products = repo.findAll(pageable);
+    }
     
     // 1. Check if the list is empty and throw your custom exception
     if (products.isEmpty()) {

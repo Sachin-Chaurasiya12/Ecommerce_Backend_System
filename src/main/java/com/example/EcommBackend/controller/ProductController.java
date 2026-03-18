@@ -56,9 +56,10 @@ public class ProductController {
     @GetMapping()
     public Page<ProductDTO> getAllProduct(
         @RequestParam int page,
-        @RequestParam int size
+        @RequestParam int size, 
+        @RequestParam(required = false) Long categoryId
     ){
-        return service.getProducts(page,size);
+        return service.getProducts(page,size,categoryId);
     }
 
     @PostMapping()
