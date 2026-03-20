@@ -58,7 +58,7 @@ public class OrderController {
         @RequestParam int page,
         @RequestParam int size
     ){
-        return service.getOrders(size,page);
+        return service.getOrders(page,size);
     }
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{orderid}")
