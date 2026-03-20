@@ -25,7 +25,6 @@ package com.example.EcommBackend.dto;
 import java.time.LocalDateTime;
 
 import com.example.EcommBackend.model.Category;
-import com.example.EcommBackend.model.Product;
 
 public class ProductDTO {
     private Long id;

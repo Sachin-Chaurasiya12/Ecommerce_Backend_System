@@ -27,6 +27,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,6 +63,7 @@ public class ProductController {
         return service.getProducts(page,size,categoryId);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public Product addProduct(@RequestBody ProductRequest request){
         return service.addProduct(request);
@@ -72,10 +74,12 @@ public class ProductController {
         return service.getProductbyid(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         return service.deleteproduct(id);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ProductDTO update(@PathVariable Long id,@RequestBody ProductRequest request){
         return service.updateProduct(id,request);

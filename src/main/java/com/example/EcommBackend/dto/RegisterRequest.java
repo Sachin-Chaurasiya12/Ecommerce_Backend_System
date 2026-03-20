@@ -22,10 +22,17 @@ Public License instead of this License.  But first, please read
 */
 package com.example.EcommBackend.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class RegisterRequest {
+    @NotBlank
+    @Size(min = 3,max = 30,message = "Size must be between 3 to 20 Characters")
     private String username;
+    @NotBlank
     private String password;
 
+    public RegisterRequest(){}
     public RegisterRequest(String username,String password){
         this.username = username;
         this.password = password;

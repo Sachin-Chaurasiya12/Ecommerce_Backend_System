@@ -60,7 +60,7 @@ public class OrderController {
     ){
         return service.getOrders(page,size);
     }
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/{orderid}")
     public ResponseEntity<OrderResponseDTO> getorderByid(@PathVariable Integer orderid){
         OrderResponseDTO responseDTO = service.getOrders(orderid);
