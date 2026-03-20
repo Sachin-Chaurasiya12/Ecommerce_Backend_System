@@ -27,6 +27,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,7 +43,7 @@ public class Cart {
 
     private Long userId;
 
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL) 
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,fetch = FetchType.LAZY) 
     private List<CartItem> items = new ArrayList<>();
 
     public Cart(){}

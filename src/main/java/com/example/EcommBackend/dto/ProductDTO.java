@@ -25,7 +25,6 @@ package com.example.EcommBackend.dto;
 import java.time.LocalDateTime;
 
 import com.example.EcommBackend.model.Category;
-import com.example.EcommBackend.model.Product;
 
 public class ProductDTO {
     private Long id;
@@ -62,7 +61,7 @@ public class ProductDTO {
     public Double getPrice() {
         return price;
     }
-    public Category getCatogaryId() {
+    public Category getCatogary() {
         return category;
     }
     public LocalDateTime getCreatedAt() {

@@ -25,13 +25,15 @@ package com.example.EcommBackend.service.orders;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.example.EcommBackend.dto.OrderRequestDTO;
 import com.example.EcommBackend.dto.OrderResponseDTO;
 
 public interface OrderService {
     OrderResponseDTO createOrder(OrderRequestDTO request);
 
-    List<OrderResponseDTO> getOrders();
+    Page<OrderResponseDTO> getOrders(int page,int size);
 
     OrderResponseDTO getOrders(Integer orderid);
 }
