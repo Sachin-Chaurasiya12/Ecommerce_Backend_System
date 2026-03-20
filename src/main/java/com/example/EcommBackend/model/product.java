@@ -32,7 +32,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "product_details")
-public class Product {
+public class Product{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

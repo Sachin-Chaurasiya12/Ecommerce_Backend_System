@@ -25,6 +25,7 @@ package com.example.EcommBackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.EcommBackend.dto.OrderRequestDTO;
@@ -52,8 +54,11 @@ public class OrderController {
     }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<OrderResponseDTO> getorder(){
-        return service.getOrders();
+    public Page<OrderResponseDTO> getorder(
+        @RequestParam int page,
+        @RequestParam int size
+    ){
+        return service.getOrders(page,size);
     }
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/{orderid}")
