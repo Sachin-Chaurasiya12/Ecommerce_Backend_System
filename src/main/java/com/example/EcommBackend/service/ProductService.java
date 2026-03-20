@@ -128,4 +128,26 @@ public class ProductService {
             updated.getUpdatedAt()
         );
     }
+
+    public Page<ProductDTO> search(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Product> products;
+
+        products = repo.findByNameContainingIgnoreCase(keyword, pageable);
+
+        if(products.isEmpty()){
+            throw new ResourceNotFoundException("Product not found");
+        }
+
+        return products.map(product -> new ProductDTO(
+            product.getId(),
+            product.getName(),
+            product.getDescription(),
+            product.getPrice(),
+            product.getCategory(),
+            product.getCreatedAt(),
+            product.getUpdatedAt()
+        ));
+    }
 }

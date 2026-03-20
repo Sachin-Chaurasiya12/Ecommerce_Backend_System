@@ -59,7 +59,7 @@ public class CategoryController {
     public Category addCategory(@RequestBody RequestCategory category){
         return service.addCategory(category);
     }
-
+    
     @GetMapping("/{id}")
     public CategoryDTO getCategories(@PathVariable Long id){
         return service.getCategorybyid(id);

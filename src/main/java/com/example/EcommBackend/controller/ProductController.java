@@ -73,6 +73,14 @@ public class ProductController {
     public ProductDTO getProduct(@PathVariable Long id){
         return service.getProductbyid(id);
     }
+    @GetMapping("/search")
+    public Page<ProductDTO> searchProduct(
+        @RequestParam String keyword,
+        @RequestParam int page,
+        @RequestParam int size
+    ){
+        return service.search(keyword,page,size);
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
