@@ -135,6 +135,7 @@ public class OrderServiceImpl implements OrderService{
     public OrderResponseDTO getOrders(Integer orderid) {
         String email = SecurityContextHolder.getContext()
                         .getAuthentication().getName();
+
         Users user = userRepo.findOptionalByUsername(email)
         .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
@@ -143,9 +144,8 @@ public class OrderServiceImpl implements OrderService{
                     .orElseThrow(() -> new ResourceNotFoundException("order not found"));
         
         if(orders.getUser().getId() != user.getId()){
-            throw new RuntimeException("Your not not allowed to access");
+            throw new RuntimeException("Order Not accessable");
         }
         return mapToResponse(orders);
     }
-
 }
