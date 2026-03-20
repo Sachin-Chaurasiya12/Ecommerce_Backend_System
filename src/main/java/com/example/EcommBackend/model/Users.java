@@ -22,11 +22,15 @@ Public License instead of this License.  But first, please read
 */
 package com.example.EcommBackend.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="users")
@@ -34,8 +38,17 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(unique = true,nullable = false)
+    @Size(min = 3,max = 30,message = "Name must be between 3 to 20 Characters")
     private String username;
+    
+    @Column(nullable = false)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     public Users(){}
     public Users(int id,String username,String password){
@@ -57,6 +70,12 @@ public class Users {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
     }
     @Override
     public String toString() {

@@ -25,7 +25,9 @@ package com.example.EcommBackend.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.EcommBackend.dto.CategoryDTO;
@@ -52,10 +55,15 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping()
-    public List<ProductDTO> getAllProduct(){
-        return service.getProducts();
+    public Page<ProductDTO> getAllProduct(
+        @RequestParam int page,
+        @RequestParam int size, 
+        @RequestParam(required = false) Long categoryId
+    ){
+        return service.getProducts(page,size,categoryId);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public Product addProduct(@RequestBody ProductRequest request){
         return service.addProduct(request);
@@ -65,11 +73,21 @@ public class ProductController {
     public ProductDTO getProduct(@PathVariable Long id){
         return service.getProductbyid(id);
     }
+    @GetMapping("/search")
+    public Page<ProductDTO> searchProduct(
+        @RequestParam String keyword,
+        @RequestParam int page,
+        @RequestParam int size
+    ){
+        return service.search(keyword,page,size);
+    }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         return service.deleteproduct(id);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ProductDTO update(@PathVariable Long id,@RequestBody ProductRequest request){
         return service.updateProduct(id,request);
