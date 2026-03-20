@@ -32,4 +32,8 @@ import com.example.EcommBackend.model.Product;
 @Repository
 public interface ProductRepo extends JpaRepository<Product,Long>{
     Page<Product> findByCategoryId(Long CategoryId,Pageable pageable);
+    Page<Product> findByNameContainingIgnoreCase(
+      String keyword,
+      Pageable pageable
+    );
 }
