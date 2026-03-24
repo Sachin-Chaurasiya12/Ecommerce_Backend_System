@@ -25,7 +25,7 @@ public class PaymentController {
     public Map<String,String> createPaymentIntent(@RequestBody Map<String,Object> data) throws Exception{
 
         Long amount = Long.valueOf(data.get("amount").toString());
-        Integer orderId = Integer.valueOf(data.get("OrderId").toString());
+        Integer orderId = Integer.valueOf(data.get("orderId").toString());
 
         PaymentIntent intent = service.createPaymentIntent(amount,orderId);
 
