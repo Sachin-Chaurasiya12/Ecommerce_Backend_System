@@ -42,6 +42,7 @@ import com.example.EcommBackend.dto.OrderResponseDTO;
 import com.example.EcommBackend.model.OrderItem;
 import com.example.EcommBackend.model.Orders;
 import com.example.EcommBackend.model.Product;
+import com.example.EcommBackend.model.OrderStatus;
 import com.example.EcommBackend.model.Users;
 import com.example.EcommBackend.repository.OrderRepo;
 import com.example.EcommBackend.repository.ProductRepo;
@@ -56,6 +57,7 @@ public class OrderServiceImpl implements OrderService{
     @Autowired
     private ProductRepo productRepo;
     @Override
+    
     public OrderResponseDTO createOrder(OrderRequestDTO request) {
         Users user = userRepo.findById(request.getUserId())
                         .orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -63,7 +65,7 @@ public class OrderServiceImpl implements OrderService{
         orders.setUser(user);
         orders.setOrderDate(LocalDateTime.now());
         orders.setShippingAddress(request.getShippingAddress());
-        orders.setStatus("Created");
+        orders.setStatus(OrderStatus.PENDING);
 
         double totalPrice = 0;
 
