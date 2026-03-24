@@ -5,13 +5,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.EcommBackend.Exceptions.ResourceNotFoundException;
 import com.example.EcommBackend.model.Orders;
-import com.example.EcommBackend.model.Status;
+import com.example.EcommBackend.model.OrderStatus;
 import com.example.EcommBackend.repository.OrderRepo;
+import com.google.gson.JsonObject;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
 import com.stripe.model.PaymentIntent;
@@ -28,36 +28,37 @@ public class WebhookController {
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<String> handleWebhook(@RequestBody String payload,
-        @RequestHeader("Stripe-Signature") String sigheader
-    ){
+public ResponseEntity<String> handleWebhook(@RequestBody String payload){
 
-        Event event;
-        try {
-            event = Webhook.constructEvent(payload, sigheader, "whsec_h9wQ6enaOR9fHNB1QEajL1vTYlxcpAqZ");
-        } catch (SignatureVerificationException e) {
-            return ResponseEntity.badRequest().body("Invalid Signature");
-        }   
+    System.out.println("Webhook called!");
 
-        if("payment_intent.succeeded".equals(event.getType())){
+    JsonObject json = Event.GSON.fromJson(payload, JsonObject.class);
 
-            var StripeObject = event.getDataObjectDeserializer().getObject();
+    String eventType = json.get("type").getAsString();
+    System.out.println("Event type: " + eventType);
 
-            if(StripeObject.isPresent()){
+    if ("payment_intent.succeeded".equals(eventType)) {
 
-                PaymentIntent intent = 
-                    (com.stripe.model.PaymentIntent) StripeObject.get();
+        JsonObject dataObject = json
+                .getAsJsonObject("data")
+                .getAsJsonObject("object");
 
-                String orderId = intent.getMetadata().get("orderId");
+        String orderId = dataObject
+                .getAsJsonObject("metadata")
+                .get("orderId")
+                .getAsString();
 
-                Orders order = repo.findById(Integer.valueOf(orderId))
-                            .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+        System.out.println("OrderId: " + orderId);
 
-                order.setStatus(Status.PAID);
-                repo.save(order);
-            }
-        }
-        
-        return ResponseEntity.ok("success");
+        Orders order = repo.findById(Integer.valueOf(orderId))
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+
+        order.setStatus(OrderStatus.PAID);
+        repo.save(order);
+
+        System.out.println("Order updated to PAID");
     }
+
+    return ResponseEntity.ok("success");
+}
 }

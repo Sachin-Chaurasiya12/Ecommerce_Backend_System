@@ -1,6 +1,6 @@
 package com.example.EcommBackend.model;
 
-public enum Status {
+public enum OrderStatus {
     PENDING,
     CREATED,
     PAID,

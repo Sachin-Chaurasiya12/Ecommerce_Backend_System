@@ -29,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -46,7 +48,8 @@ public class Orders {
     private Integer id;
     private LocalDateTime orderDate;
     private String shippingAddress;
-    private Status status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
     private Double totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -83,10 +86,10 @@ public class Orders {
     public void setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
-    public Status getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
-    public void setStatus(Status status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
     public Double getTotalPrice() {
