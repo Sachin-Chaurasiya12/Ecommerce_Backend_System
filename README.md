@@ -100,6 +100,20 @@ GET /api/orders
 GET /api/orders/{id}
 ```
 
+### webhook
+
+```
+POST /api/webhook
+```
+
+### payment
+
+```
+POST /api/payment/create-payment
+```
+
+
+
 ---
 
 ## 📖 API Documentation
@@ -136,7 +150,6 @@ http://localhost:8080
 
 ## 🔮 Future Improvements
 
-* Payment gateway integration
 * Docker containerization
 * Redis caching
 * Microservices architecture
