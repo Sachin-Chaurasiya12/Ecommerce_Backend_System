@@ -46,7 +46,7 @@ public class Orders {
     private Integer id;
     private LocalDateTime orderDate;
     private String shippingAddress;
-    private String status;
+    private Status status;
     private Double totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -83,10 +83,10 @@ public class Orders {
     public void setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
     public Double getTotalPrice() {

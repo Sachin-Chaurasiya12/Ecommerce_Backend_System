@@ -25,12 +25,14 @@ package com.example.EcommBackend.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.EcommBackend.model.Status;
+
 public class OrderResponseDTO {
 
     private Integer orderId;
     private LocalDateTime orderDate;
     private String shippingAddress;
-    private String status;
+    private Status status;
     private Double totalPrice;
 
     private List<OrderItemResponseDTO> items;
@@ -61,11 +63,11 @@ public class OrderResponseDTO {
         this.shippingAddress = shippingAddress;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -23,9 +23,11 @@ public class PaymentController {
     
     @PostMapping("/create-payment")
     public Map<String,String> createPaymentIntent(@RequestBody Map<String,Object> data) throws Exception{
-        Long amount = Long.valueOf(data.get("amount").toString());
 
-        PaymentIntent intent = service.createPaymentIntent(amount);
+        Long amount = Long.valueOf(data.get("amount").toString());
+        Integer orderId = Integer.valueOf(data.get("OrderId").toString());
+
+        PaymentIntent intent = service.createPaymentIntent(amount,orderId);
 
         Map<String,String> response = new HashMap<>();
         response.put("clientsecret", intent.getClientSecret());

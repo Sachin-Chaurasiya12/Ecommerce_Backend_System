@@ -42,6 +42,7 @@ import com.example.EcommBackend.dto.OrderResponseDTO;
 import com.example.EcommBackend.model.OrderItem;
 import com.example.EcommBackend.model.Orders;
 import com.example.EcommBackend.model.Product;
+import com.example.EcommBackend.model.Status;
 import com.example.EcommBackend.model.Users;
 import com.example.EcommBackend.repository.OrderRepo;
 import com.example.EcommBackend.repository.ProductRepo;
@@ -63,7 +64,7 @@ public class OrderServiceImpl implements OrderService{
         orders.setUser(user);
         orders.setOrderDate(LocalDateTime.now());
         orders.setShippingAddress(request.getShippingAddress());
-        orders.setStatus("Created");
+        orders.setStatus(Status.PENDING);
 
         double totalPrice = 0;
 

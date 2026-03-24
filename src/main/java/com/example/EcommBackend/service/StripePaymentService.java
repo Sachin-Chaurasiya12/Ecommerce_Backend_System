@@ -9,11 +9,12 @@ import com.stripe.param.PaymentIntentCreateParams;
 @Service
 public class StripePaymentService {
     
-    public PaymentIntent createPaymentIntent(Long amount) throws StripeException{
+    public PaymentIntent createPaymentIntent(Long amount,Integer orderId) throws StripeException{
 
         PaymentIntentCreateParams params = new PaymentIntentCreateParams
                     .Builder()
                     .setAmount(amount)
+                    .putMetadata("orderId", orderId.toString())
                     .setCurrency("inr")
                     .setAutomaticPaymentMethods(
                         PaymentIntentCreateParams.AutomaticPaymentMethods
